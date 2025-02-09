@@ -6,19 +6,13 @@ import { MatTableDataSource } from '@angular/material/table';
 import { CustomerdetailsComponent } from '../customerdetails/customerdetails.component';
 import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
 import { Router } from '@angular/router';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { CommonService } from '../service/common.service';
 
 
 export interface UserData {
-  gid: string;
-  cust_name: string;
-  mb_no: string;
-  street: string;
-  city: string;
-  state: string;
-  zipCode: string;
-  id_proof: string;
-  book_color: string;
-  middle_per_name: string;
+  _id: string;
+  
 }
 
 @Component({
@@ -29,18 +23,31 @@ export interface UserData {
 export class CustomerComponent {
 
   UserData: UserData[] = []; 
-  displayedColumns: string[] = ['gid', 'cust_name', 'mb_no', 'street', 'city', 'state', 'zipCode', 'id_proof', 'book_color', 'middle_per_name','action'];
+  displayedColumns: string[] = ['_id', 'name', 'mobileNo', 'address','action'];
   dataSource = new MatTableDataSource<UserData>(this.UserData); // Initialize with an empty array
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  constructor(private dilog:MatDialog,private router:Router){   
+  constructor(private dilog:MatDialog,private router:Router,private spinner:NgxSpinnerService,private common:CommonService){
+
+    
+    //alert('spinner')
+  
+      this.common.getUser().subscribe((res:any)=>{
+
+        this.dataSource=res;
+        console.log(this.dataSource)
+
+      })
+
   }
+
 
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
+    
   }
 
   applyFilter(event: Event) {
@@ -52,11 +59,18 @@ export class CustomerComponent {
     }
   }
 
+  ngOnInit(){
+
+      this.spinner.show();
+      setTimeout(() => {
+        this.spinner.hide()
+      }, 1000);
+  }
   openPop(){
 
     const dilogRef=this.dilog.open(CustomerdetailsComponent,{
 
-      width:'500px',
+      width:'700px',
       height:'600px'
 
     })
@@ -77,6 +91,9 @@ export class CustomerComponent {
 
   }
 
+
+  
+
   DelData(row:UserData){
 
     const dilogRefe=this.dilog.open(ConfirmDialogComponent,{
@@ -88,17 +105,28 @@ export class CustomerComponent {
    // const usr=result;
       // console.log(usr);
           if(deltent == true){
-        console.log("test successfykky")
-        const index=this.UserData.indexOf(row)
-        if(index >=0){
-        this.UserData.splice(index,1)
-        this.dataSource.data=[...this.UserData]
-            }
+
+            this.spinner.show()
+             this.common.DeleteUser(row._id).subscribe(
+              ()=>{
+
+                this.UserData = this.UserData.filter(user => user._id !== row._id);
+                this.dataSource.data = [...this.UserData];
+                this.spinner.hide(); // Hide spinner
+                //alert('User deleted successfully!');
+              },
+              (error) => {
+                this.spinner.hide();
+                alert('Error deleting user: ' + error.message);
+              }
+            )
+               
       }
 
     });
 
   }
+  
 
   LogOut(){
 

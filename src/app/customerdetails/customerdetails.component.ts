@@ -5,6 +5,7 @@ import { MatDialogRef } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { CustomerComponent } from '../customer/customer.component';
 import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
+import { CommonService } from '../service/common.service';
 
 @Component({
   selector: 'app-customerdetails',
@@ -16,23 +17,26 @@ export class CustomerdetailsComponent {
   Customer:FormGroup
 
 
-constructor(public fb:FormBuilder,public router:Router,public dilog:MatDialogRef<CustomerComponent>){
-
+constructor(public fb:FormBuilder,public router:Router,public dilog:MatDialogRef<CustomerComponent>,public common:CommonService){
 
   
   this.Customer=this.fb.group({
 
 
-    gid:[{ value: '11', disabled: true }],
-    cust_name:['',[Validators.required]],
-    mb_no:['',[Validators.required,Validators.pattern(/^\d{10}$/)]],
+    guid:[{ value: '11', disabled: true }],
+    name:['',[Validators.required]],
+    mobileNo:['',[Validators.required,Validators.pattern(/^\d{10}$/)]],
+    address:this.fb.group({
     street:['',Validators.required],
     city:['',Validators.required],
     state:['',Validators.required],
-    zipCode:['',Validators.required],
-    id_proof:['',Validators.required],
-    book_color:['',Validators.required],
-    middle_per_name:['']
+    zipCode:['',[Validators.required,Validators.pattern(/^\d{6}$/)]],
+    }),
+    
+    idProof:['',Validators.required],
+    idProofValue:['',Validators.required],
+    bookColour:['',Validators.required],
+    middlePerson:['']
 
   })
 
@@ -47,34 +51,15 @@ get f(){
 
 addData(){
 
-  if(this.Customer.value){
 
-  const storeData=this.Customer.value
+    this.common.addCust(this.Customer.value).subscribe((res:any)=>{
 
-  const objData={
-
-    gid:storeData.gid,
-    cust_name:storeData.cust_name,
-    mb_no:storeData.mb_no,
-    address:{
-
-      street:storeData.street,
-      city:storeData.city,
-      state:storeData.state,
-      zipcode:storeData.zipcode
+      alert('Customer added successfully!');
+      this.Customer.reset();
+      this.dilog.close(this.Customer.value)
     },
-    id_proof:storeData.id_proof,
-    book_color:storeData.book_color,
-    middle_per_name:storeData.middle_per_name
-
-  }
-  console.log(objData);
+  )
   
-    this.dilog.close(this.Customer.value)
-
-  }
-  
-
 
 }
 

@@ -41,21 +41,22 @@ export class LoginComponent {
     //alert('login Succesfully')
     sessionStorage.setItem('username',username);
     sessionStorage.setItem('password',pass)
-    this.spinner.show()
+       this.router.navigate(['/'])
 
-    setTimeout(() => {
+    //this.spinner.show()
+
+    // setTimeout(() => {
       
-      this.spinner.hide()
-      this.router.navigate(['/'])
+    //   this.spinner.hide()
 
-    }, 10000);
+    // }, 10000);
 
 
-    setTimeout(() => {
+    // setTimeout(() => {
       
-      // sessionStorage.removeItem(username)
-      // sessionStorage.removeItem(pass)
-    }, 10000);
+    //   // sessionStorage.removeItem(username)
+    //   // sessionStorage.removeItem(pass)
+    // }, 10000);
 
    }else{
 

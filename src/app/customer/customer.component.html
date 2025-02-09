@@ -13,57 +13,27 @@
     <table mat-table  [dataSource]="dataSource" matSort>
   
       <!-- ID Column -->
-      <ng-container matColumnDef="gid">
+      <ng-container matColumnDef="_id">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> GUID </th>
-        <td mat-cell *matCellDef="let row"> {{row.gid}} </td>
+        <td mat-cell *matCellDef="let row"> {{row._id}} </td>
       </ng-container>
   
       <!-- Progress Column -->
-      <ng-container matColumnDef="cust_name">
+      <ng-container matColumnDef="name">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Customer </th>
-        <td mat-cell *matCellDef="let row"> {{row.cust_name}} </td>
+        <td mat-cell *matCellDef="let row"> {{row.name}} </td>
       </ng-container>
   
       <!-- Name Column -->
-      <ng-container matColumnDef="mb_no">
+      <ng-container matColumnDef="mobileNo">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Mobile No </th>
-        <td mat-cell *matCellDef="let row"> {{row.mb_no}} </td>
+        <td mat-cell *matCellDef="let row"> {{row.mobileNo}} </td>
       </ng-container>
   
       <!-- Fruit Column -->
-      <ng-container matColumnDef="street">
+      <ng-container matColumnDef="address">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Street </th>
-        <td mat-cell *matCellDef="let row"> {{row.street}} </td>
-      </ng-container>
-
-      <ng-container matColumnDef="city">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> City </th>
-        <td mat-cell *matCellDef="let row"> {{row.city}} </td>
-      </ng-container>
-
-      <ng-container matColumnDef="state">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> State </th>
-        <td mat-cell *matCellDef="let row"> {{row.state}} </td>
-      </ng-container>
-
-      <ng-container matColumnDef="zipCode">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Zip Code </th>
-        <td mat-cell *matCellDef="let row"> {{row.zipCode}} </td>
-      </ng-container>
-
-      <ng-container matColumnDef="id_proof">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Id Proof </th>
-        <td mat-cell *matCellDef="let row"> {{row.id_proof}} </td>
-      </ng-container>
-
-      <ng-container matColumnDef="book_color">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Book Color </th>
-        <td mat-cell *matCellDef="let row"> {{row.book_color}} </td>
-      </ng-container>
-
-      <ng-container matColumnDef="middle_per_name">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Middle Per Name </th>
-        <td mat-cell *matCellDef="let row"> {{row.middle_per_name}} </td>
+        <td mat-cell *matCellDef="let row"> {{row.address}} </td>
       </ng-container>
 
       <ng-container matColumnDef="action">
@@ -83,5 +53,5 @@
   
     <mat-paginator [pageSize]="5" showFirstLastButtons></mat-paginator>
   </div>
-  
+  <ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size = "medium" color = "#fff" type = "square-jelly-box" [fullScreen] = "true"><p style="color: white" > Loading... </p></ngx-spinner>
   </div>

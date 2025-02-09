@@ -12,6 +12,10 @@ import { LoginComponent } from './login/login.component';
 import { NotfoundComponent } from './notfound/notfound.component';
 import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
 import { NgxSpinnerModule } from "ngx-spinner";
+import { HttpClientModule } from '@angular/common/http';
+
+
+
 
 
 @NgModule({
@@ -29,8 +33,9 @@ import { NgxSpinnerModule } from "ngx-spinner";
     AppRoutingModule,
     BrowserAnimationsModule,
     MaterialModule,
-    NgxSpinnerModule
-  ],
+    NgxSpinnerModule,
+    HttpClientModule
+   ],
   providers: [],
   schemas:[CUSTOM_ELEMENTS_SCHEMA],
   bootstrap: [AppComponent]
