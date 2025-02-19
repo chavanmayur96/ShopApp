@@ -48,13 +48,17 @@ get f(){
 
 }
 
-
+ngOnInit(){
+  
+  //this.addData()
+  
+}
 addData(){
 
 
     this.common.addCust(this.Customer.value).subscribe((res:any)=>{
 
-      alert('Customer added successfully!');
+      //alert('Customer added successfully!');
       this.Customer.reset();
       this.dilog.close(this.Customer.value)
     },
